@@ -10,19 +10,19 @@ public class TaskController : ControllerBase {
             Id = 1,
             Title = "Изучить ASP.NET Core",
             Priority = "High",
-            IsComleted = true
+            IsCompleted = true
         },
         new TaskItem {
             Id = 2,
             Title = "Сделать лабораторную работу №28",
             Priority = "High",
-            IsComleted = false
+            IsCompleted = false
         },
         new TaskItem {
             Id = 3,
             Title = "Написать README",
             Priority = "Normal",
-            IsComleted = false
+            IsCompleted = false
         },
     };
     private static int _nextId = 4;
@@ -32,7 +32,7 @@ public class TaskController : ControllerBase {
         var result = _tasks.AsEnumerable();
 
         if (completed.HasValue)
-            result = result.Where(t => t.IsComleted == completed.Value);
+            result = result.Where(t => t.IsCompleted == completed.Value);
 
         return Ok(result);
     }
@@ -54,7 +54,7 @@ public class TaskController : ControllerBase {
             Title = dto.Title,
             Description = dto.Description,
             Priority = dto.Priority,
-            IsComleted = false,
+            IsCompleted = false,
             CreateAt = DateTime.Now
         };
         _tasks.Add(newTask);
@@ -73,7 +73,7 @@ public class TaskController : ControllerBase {
 
         task.Title = dto.Title;
         task.Description = dto.Description;
-        task.IsComleted = dto.IsComleted;
+        task.IsCompleted = dto.IsCompleted;
         task.Priority = dto.Priority;
 
         return Ok(task);
@@ -95,7 +95,7 @@ public class TaskController : ControllerBase {
         var task = _tasks.FirstOrDefault(t => t.Id == id);
         if (task is null)
             return NotFound(new { Message = $"Задача с id = {id} не найдена" });
-        task.IsComleted = !task.IsComleted;
+        task.IsCompleted = !task.IsCompleted;
         return Ok(task);
     }
 }
